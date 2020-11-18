@@ -17,7 +17,6 @@
 #ifndef RAW_ENABLE
 #    error "RAW_ENABLE is not enabled"
 #endif
-#define RGB_MATRIX_STARTUP_HUE 0
 #include "quantum.h"
 
 #include "openrgb.h"
