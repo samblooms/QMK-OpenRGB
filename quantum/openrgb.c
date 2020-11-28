@@ -302,32 +302,28 @@ void openrgb_get_zone_size(uint8_t *data) {
     raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_led_name(uint8_t *data) {
-    const uint8_t led = data[1];
+    const uint8_t led_column = data[1];
+    const uint8_t led_row= data[2];
 
     raw_hid_buffer[0] = OPENRGB_GET_LED_NAME;
 
-    if (led >= DRIVER_LED_TOTAL) {
+    if (led_column >= MATRIX_COLS || led_row >= MATRIX_ROWS) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
         raw_hid_buffer[2] = OPENRGB_EOM;
         return;
     }
 
-    const char *led_name = g_openrgb_config.led_names[led];
-    uint8_t     i        = 0;
-    while (led_name[i] != 0 && i + 2 < RAW_EPSIZE) {
-        raw_hid_buffer[i + 1] = led_name[i];
-        i++;
-    }
-    raw_hid_buffer[i + 1] = OPENRGB_EOM;
+    raw_hid_buffer[1] = keymaps[0][led_row][led_column];
+    raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_led_matrix_columns(void) {
     raw_hid_buffer[0] = OPENRGB_GET_LED_MATRIX_COLUMNS;
-    raw_hid_buffer[1] = OPENRGB_MATRIX_COLUMNS;
+    raw_hid_buffer[1] = MATRIX_COLS;
     raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_led_matrix_rows(void) {
     raw_hid_buffer[0] = OPENRGB_GET_LED_MATRIX_ROWS;
-    raw_hid_buffer[1] = OPENRGB_MATRIX_ROWS;
+    raw_hid_buffer[1] = MATRIX_ROWS;
     raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_led_value_in_matrix(uint8_t *data) {
@@ -336,13 +332,13 @@ void openrgb_get_led_value_in_matrix(uint8_t *data) {
 
     raw_hid_buffer[0] = OPENRGB_GET_LED_VALUE_IN_MATRIX;
 
-    if (column >= OPENRGB_MATRIX_COLUMNS || row >= OPENRGB_MATRIX_ROWS) {
+    if (column >= MATRIX_COLS || row >= MATRIX_ROWS) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
         raw_hid_buffer[2] = OPENRGB_EOM;
         return;
     }
 
-    raw_hid_buffer[1] = g_openrgb_config.led_matrix_map[row][column];
+    raw_hid_buffer[1] = g_led_config.matrix_co[row][column];
     raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_led_color(uint8_t *data) {

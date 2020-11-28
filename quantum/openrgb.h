@@ -48,8 +48,6 @@ typedef struct PACKED {
     char    zone_names[OPENRGB_ZONES_COUNT][RAW_EPSIZE];
     uint8_t zone_types[OPENRGB_ZONES_COUNT];
     uint8_t zone_sizes[OPENRGB_ZONES_COUNT];
-    uint8_t led_matrix_map[OPENRGB_MATRIX_ROWS][OPENRGB_MATRIX_COLUMNS];
-    char    led_names[DRIVER_LED_TOTAL][RAW_EPSIZE];
     bool should_save_to_eeprom;
 } openrgb_config_t;
 
