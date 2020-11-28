@@ -49,7 +49,7 @@ led_config_t g_led_config = { {
 } };
 
 #ifdef OPENRGB_ENABLE
-openrgb_config_t g_openrgb_config =
+const openrgb_config_t g_openrgb_config =
 {
     // Zones names
     {"Keyboard", "Lightbar"},
