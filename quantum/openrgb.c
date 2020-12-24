@@ -371,8 +371,6 @@ void openrgb_get_led_value_in_matrix(uint8_t *data) {
 
     if (column >= max_col || row >= max_row) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
-        raw_hid_buffer[2] = OPENRGB_EOM;
-        return;
     }
 
     raw_hid_buffer[2] = OPENRGB_EOM;
