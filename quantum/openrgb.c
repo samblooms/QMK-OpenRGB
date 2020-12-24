@@ -307,6 +307,12 @@ void openrgb_get_led_name(uint8_t *data) {
 
     raw_hid_buffer[0] = OPENRGB_GET_LED_NAME;
 #ifdef OPENRGB_USE_CUSTOM_MATRIX_MAP
+    if (led_column >= OPENRGB_MATRIX_COLUMNS || led_row >= OPENRGB_MATRIX_ROWS) {
+        raw_hid_buffer[1] = OPENRGB_FAILURE;
+        raw_hid_buffer[2] = OPENRGB_EOM;
+        return;
+    }
+
     uint8_t index = g_openrgb_config.physical_to_hardware_location[led_row][led_column];
     uint8_t row    = index / MATRIX_COLS;
     uint8_t column = index % MATRIX_COLS;
