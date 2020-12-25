@@ -42,6 +42,123 @@ static uint8_t raw_hid_buffer[RAW_EPSIZE];
 
 RGB g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL] = {[0 ... DRIVER_LED_TOTAL - 1] = {OPENRGB_DIRECT_MODE_STARTUP_GREEN, OPENRGB_DIRECT_MODE_STARTUP_RED, OPENRGB_DIRECT_MODE_STARTUP_BLUE}};
 
+static const uint8_t openrgb_rgb_matrix_effects_names[] = {
+    1,
+    2,
+
+#ifndef DISABLE_RGB_MATRIX_ALPHAS_MODS
+    3,
+#endif
+#ifndef DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN
+    4,
+#endif
+#ifndef DISABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
+    5,
+#endif
+#ifndef DISABLE_RGB_MATRIX_BREATHING
+    6,
+#endif
+#ifndef DISABLE_RGB_MATRIX_BAND_SAT
+    7,
+#endif
+#ifndef DISABLE_RGB_MATRIX_BAND_VAL
+    8,
+#endif
+#ifndef DISABLE_RGB_MATRIX_BAND_PINWHEEL_SAT
+    9,
+#endif
+#ifndef DISABLE_RGB_MATRIX_BAND_PINWHEEL_VAL
+    10,
+#endif
+#ifndef DISABLE_RGB_MATRIX_BAND_SPIRAL_SAT
+    11,
+#endif
+#ifndef DISABLE_RGB_MATRIX_BAND_SPIRAL_VAL
+    12,
+#endif
+#ifndef DISABLE_RGB_MATRIX_CYCLE_ALL
+    13,
+#endif
+#ifndef DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
+    14,
+#endif
+#ifndef DISABLE_RGB_MATRIX_CYCLE_UP_DOWN
+    15,
+#endif
+#ifndef DISABLE_RGB_MATRIX_CYCLE_OUT_IN
+    16,
+#endif
+#ifndef DISABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
+    17,
+#endif
+#ifndef DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+    18,
+#endif
+#ifndef DISABLE_RGB_MATRIX_CYCLE_PINWHEEL
+    19,
+#endif
+#ifndef DISABLE_RGB_MATRIX_CYCLE_SPIRAL
+    20,
+#endif
+#ifndef DISABLE_RGB_MATRIX_DUAL_BEACON
+    21,
+#endif
+#ifndef DISABLE_RGB_MATRIX_RAINBOW_BEACON
+    22,
+#endif
+#ifndef DISABLE_RGB_MATRIX_RAINBOW_PINWHEELS
+    23,
+#endif
+#ifndef DISABLE_RGB_MATRIX_RAINDROPS
+    24,
+#endif
+#ifndef DISABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
+    25,
+#endif
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && !defined(DISABLE_RGB_MATRIX_TYPING_HEATMAP)
+    26,
+#endif
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && !defined(DISABLE_RGB_MATRIX_DIGITAL_RAIN)
+    27,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
+    28,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined RGB_MATRIX_SOLID_REACTIVE
+    29,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
+    30,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE
+    31,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_CROSS
+    32,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_MULTICROSS
+    33,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS 
+    34,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS
+    35,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SPLASH
+    36,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_MULTISPLASH 
+    37,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_SPLASH 
+    38,
+#endif
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_MULTISPLASH 
+    39,
+#endif
+};
+
 void raw_hid_receive(uint8_t *data, uint8_t length) {
     switch (*data) {
         case OPENRGB_SET_SINGLE_LED:
@@ -64,6 +181,9 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
             break;
         case OPENRGB_GET_DEVICE_NAME:
             openrgb_get_device_name();
+            break;
+        case OPENRGB_GET_ENABLED_MODES:
+            openrgb_get_enabled_modes();
             break;
         case OPENRGB_GET_ZONES_COUNT:
             openrgb_get_zones_count();
@@ -247,6 +367,17 @@ void openrgb_get_device_name(void) {
         i++;
     }
     raw_hid_buffer[0]     = OPENRGB_GET_DEVICE_NAME;
+    raw_hid_buffer[i + 1] = OPENRGB_EOM;
+}
+void openrgb_get_enabled_modes(void) {
+    raw_hid_buffer[0] = OPENRGB_GET_ZONE_TYPE;
+
+    uint8_t i = 0;
+    while(i < RGB_MATRIX_EFFECT_MAX - 1)
+    {
+        raw_hid_buffer[i + 1] = openrgb_rgb_matrix_effects_names[i];
+        i++;
+    }
     raw_hid_buffer[i + 1] = OPENRGB_EOM;
 }
 void openrgb_get_zones_count(void) {
