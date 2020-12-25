@@ -372,7 +372,7 @@ void openrgb_get_device_name(void) {
     raw_hid_buffer[i + 1] = OPENRGB_EOM;
 }
 void openrgb_get_enabled_modes(void) {
-    raw_hid_buffer[0] = OPENRGB_GET_ZONE_TYPE;
+    raw_hid_buffer[0] = OPENRGB_GET_ENABLED_MODES;
 
     uint8_t i = 0;
     while(i < RGB_MATRIX_EFFECT_MAX - 1)
