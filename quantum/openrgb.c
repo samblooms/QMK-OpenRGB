@@ -308,9 +308,11 @@ void openrgb_set_mode_and_speed(uint8_t *data) {
     }
 
     if (g_openrgb_config.should_save_to_eeprom) {
+        rgb_matrix_sethsv(0, 255, 255);
         rgb_matrix_mode(mode);
         rgb_matrix_set_speed(speed);
     } else {
+        rgb_matrix_sethsv(0, 255, 255);
         rgb_matrix_mode_noeeprom(mode);
         rgb_matrix_set_speed_noeeprom(speed);
     }
