@@ -181,7 +181,7 @@ void openrgb_set_mode_and_speed(uint8_t *data) {
 
     raw_hid_buffer[0] = OPENRGB_SET_MODE_AND_SPEED;
 
-    if (mode > RGB_MATRIX_EFFECT_MAX || speed > 255) {
+    if (mode >= RGB_MATRIX_EFFECT_MAX || speed > 255) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
         raw_hid_buffer[2] = OPENRGB_EOM;
         return;
@@ -207,7 +207,7 @@ void openrgb_set_color_mode_and_speed(uint8_t *data) {
 
     raw_hid_buffer[0] = OPENRGB_SET_COLOR_MODE_AND_SPEED;
 
-    if (h > 255 || s > 255 || v > 255 || mode > RGB_MATRIX_EFFECT_MAX || speed > 255) {
+    if (h > 255 || s > 255 || v > 255 || mode >= RGB_MATRIX_EFFECT_MAX || speed > 255) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
         raw_hid_buffer[2] = OPENRGB_EOM;
         return;
