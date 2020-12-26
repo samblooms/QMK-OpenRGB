@@ -185,6 +185,9 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         case OPENRGB_GET_DEVICE_NAME:
             openrgb_get_device_name();
             break;
+        case OPENRGB_GET_DEVICE_VENDOR:
+            openrgb_get_device_vendor();
+            break;
             
         case OPENRGB_GET_ENABLED_MODES:
             openrgb_get_enabled_modes();
@@ -407,14 +410,21 @@ void openrgb_get_qmk_version(void) {
     raw_hid_buffer[i + 1] = OPENRGB_EOM;
 }
 void openrgb_get_device_name(void) {
-#define name MANUFACTURER "  " PRODUCT
-
     uint8_t i = 0;
-    while (name[i] != 0 && i + 2 < RAW_EPSIZE) {
-        raw_hid_buffer[i + 1] = name[i];
+    while (PRODUCT[i] != 0 && i + 2 < RAW_EPSIZE) {
+        raw_hid_buffer[i + 1] = PRODUCT[i];
         i++;
     }
     raw_hid_buffer[0]     = OPENRGB_GET_DEVICE_NAME;
+    raw_hid_buffer[i + 1] = OPENRGB_EOM;
+}
+void openrgb_get_device_vendor(void) { 
+    uint8_t i = 0;
+    while (MANUFACTURER[i] != 0 && i + 2 < RAW_EPSIZE) {
+        raw_hid_buffer[i + 1] = MANUFACTURER[i];
+        i++;
+    }
+    raw_hid_buffer[0]     = OPENRGB_GET_DEVICE_VENDOR;
     raw_hid_buffer[i + 1] = OPENRGB_EOM;
 }
 
