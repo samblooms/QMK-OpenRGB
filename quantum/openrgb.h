@@ -31,6 +31,7 @@ enum openrgb_command_id {
     OPENRGB_GET_QMK_VERSION,
     OPENRGB_GET_DEVICE_NAME,
     OPENRGB_GET_ENABLED_MODES,
+    OPENRGB_GET_ACTIVE_MODE,
     OPENRGB_GET_ZONES_COUNT,
     OPENRGB_GET_ZONE_NAME,
     OPENRGB_GET_ZONE_TYPE,
@@ -70,6 +71,7 @@ void openrgb_set_color_mode_and_speed(uint8_t *data);
 void openrgb_get_qmk_version(void);
 void openrgb_get_device_name(void);
 void openrgb_get_enabled_modes(void);
+void openrgb_get_active_mode(void);
 void openrgb_get_zones_count(void);
 void openrgb_get_zone_name(uint8_t *data);
 void openrgb_get_zone_type(uint8_t *data);
