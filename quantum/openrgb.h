@@ -24,7 +24,6 @@ enum openrgb_command_id {
     OPENRGB_SET_SINGLE_LED,
     OPENRGB_SET_LEDS,
 
-    OPENRGB_SET_MODE,
     OPENRGB_SET_MODE_AND_SPEED,
     OPENRGB_SET_COLOR_MODE_AND_SPEED,
 
@@ -58,12 +57,10 @@ typedef struct PACKED {
 } openrgb_config_t;
 
 extern const openrgb_config_t g_openrgb_config;
-extern RGB                    g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL];
 
 // Controls RGB
 void openrgb_set_single_led(uint8_t *data);
 void openrgb_set_leds(uint8_t *data);
-void openrgb_set_mode(uint8_t *data);
 void openrgb_set_mode_and_speed(uint8_t *data);
 void openrgb_set_color_mode_and_speed(uint8_t *data);
 
