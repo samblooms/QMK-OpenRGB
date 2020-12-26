@@ -31,6 +31,7 @@ enum openrgb_command_id {
 
     OPENRGB_GET_QMK_VERSION,
     OPENRGB_GET_DEVICE_NAME,
+    OPENRGB_GET_DEVICE_VENDOR,
 
     OPENRGB_GET_ENABLED_MODES,
     OPENRGB_GET_ACTIVE_MODE,
@@ -80,6 +81,7 @@ void openrgb_qmk_mode_get_color(void);
 /////////////////////////////////////////////
 void openrgb_get_qmk_version(void);
 void openrgb_get_device_name(void);
+void openrgb_get_device_vendor(void);
 
 ////////////////////////////////////////////
 // Setup Modes
