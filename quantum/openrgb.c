@@ -26,8 +26,6 @@
 #include "string.h"
 #include <color.h>
 
-static uint8_t raw_hid_buffer[RAW_EPSIZE];
-
 #if !defined(OPENRGB_DIRECT_MODE_STARTUP_RED)
 #    define OPENRGB_DIRECT_MODE_STARTUP_RED 255
 #endif
@@ -41,10 +39,8 @@ static uint8_t raw_hid_buffer[RAW_EPSIZE];
 #endif
 
 RGB g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL] = {[0 ... DRIVER_LED_TOTAL - 1] = {OPENRGB_DIRECT_MODE_STARTUP_GREEN, OPENRGB_DIRECT_MODE_STARTUP_RED, OPENRGB_DIRECT_MODE_STARTUP_BLUE}};
-
 static const uint8_t openrgb_rgb_matrix_effects_names[] = {
-    1,
-    2,
+    1,  2,
 
 #ifndef DISABLE_RGB_MATRIX_ALPHAS_MODS
     3,
@@ -139,7 +135,7 @@ static const uint8_t openrgb_rgb_matrix_effects_names[] = {
 #if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_MULTICROSS
     33,
 #endif
-#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS 
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS
     34,
 #endif
 #if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS
@@ -148,16 +144,17 @@ static const uint8_t openrgb_rgb_matrix_effects_names[] = {
 #if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SPLASH
     36,
 #endif
-#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_MULTISPLASH 
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_MULTISPLASH
     37,
 #endif
-#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_SPLASH 
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_SPLASH
     38,
 #endif
-#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_MULTISPLASH 
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && !defined DISABLE_RGB_MATRIX_SOLID_MULTISPLASH
     39,
 #endif
 };
+static uint8_t raw_hid_buffer[RAW_EPSIZE];
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
     switch (*data) {
@@ -378,8 +375,7 @@ void openrgb_get_enabled_modes(void) {
     raw_hid_buffer[0] = OPENRGB_GET_ENABLED_MODES;
 
     uint8_t i = 0;
-    while(i < RGB_MATRIX_EFFECT_MAX - 1)
-    {
+    while (i < RGB_MATRIX_EFFECT_MAX - 1) {
         raw_hid_buffer[i + 1] = openrgb_rgb_matrix_effects_names[i];
         i++;
     }
@@ -454,9 +450,9 @@ void openrgb_get_led_name(uint8_t *data) {
         return;
     }
 
-    uint8_t index = g_openrgb_config.physical_to_hardware_location[led_row][led_column];
-    uint8_t row    = index / MATRIX_COLS;
-    uint8_t column = index % MATRIX_COLS;
+    uint8_t index     = g_openrgb_config.physical_to_hardware_location[led_row][led_column];
+    uint8_t row       = index / MATRIX_COLS;
+    uint8_t column    = index % MATRIX_COLS;
     raw_hid_buffer[1] = keymaps[0][row][column];
 #else
     if (led_column >= MATRIX_COLS || led_row >= MATRIX_ROWS) {

@@ -50,15 +50,15 @@ typedef struct PACKED {
     char    zone_names[OPENRGB_ZONES_COUNT][RAW_EPSIZE];
     uint8_t zone_types[OPENRGB_ZONES_COUNT];
     uint8_t zone_sizes[OPENRGB_ZONES_COUNT];
-    #ifdef OPENRGB_USE_CUSTOM_MATRIX_MAP
+#ifdef OPENRGB_USE_CUSTOM_MATRIX_MAP
     uint8_t led_matrix_map[OPENRGB_MATRIX_ROWS][OPENRGB_MATRIX_COLUMNS];
     uint8_t physical_to_hardware_location[OPENRGB_MATRIX_ROWS][OPENRGB_MATRIX_COLUMNS];
-    #endif
+#endif
     bool should_save_to_eeprom;
 } openrgb_config_t;
 
-extern const  openrgb_config_t g_openrgb_config;
-extern RGB              g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL];
+extern const openrgb_config_t g_openrgb_config;
+extern RGB                    g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL];
 
 // Controls RGB
 void openrgb_set_single_led(uint8_t *data);
