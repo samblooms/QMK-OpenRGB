@@ -443,7 +443,7 @@ void openrgb_get_enabled_modes(void) {
 }
 void openrgb_get_active_mode(void) {
     raw_hid_buffer[0] = OPENRGB_GET_ACTIVE_MODE;
-    raw_hid_buffer[1] = rgb_matrix_is_enabled() ? rgb_matrix_get_mode() : 1;
+    raw_hid_buffer[1] = rgb_matrix_is_enabled() ? rgb_matrix_get_mode() : 0;
     raw_hid_buffer[2] = OPENRGB_EOM;
 }
 
