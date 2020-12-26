@@ -93,7 +93,7 @@ const openrgb_config_t g_openrgb_config =
         { 63,  64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  NO_LED,  NO_LED,  NO_LED,  75,  NO_LED },
         { 76,  77,  78,  NO_LED,  NO_LED,  79,  NO_LED,  NO_LED,  NO_LED,  80,  81,  82,  83,  NO_LED,  84,  85,  86 }
     },
-    // Physical to hardware location
+    // Key index to physical position map
     {
         { 0,   1,   2,   3,  4,    5,   6,   7,   48,  49,  50,  51,  52,  NO_LED,  53,  54,  55 },
         { 8,   9,   10,  11,  12,  13,  14,  15,  56,  57,  58,  59,  60,  61,  62,  63,  79 },
