@@ -185,6 +185,9 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         case OPENRGB_GET_ENABLED_MODES:
             openrgb_get_enabled_modes();
             break;
+        case OPENRGB_GET_ACTIVE_MODE:
+            openrgb_get_active_mode();
+            break;
         case OPENRGB_GET_ZONES_COUNT:
             openrgb_get_zones_count();
             break;
@@ -381,6 +384,11 @@ void openrgb_get_enabled_modes(void) {
         i++;
     }
     raw_hid_buffer[i + 1] = OPENRGB_EOM;
+}
+void openrgb_get_active_mode(void) {
+    raw_hid_buffer[0] = OPENRGB_GET_ACTIVE_MODE;
+    raw_hid_buffer[1] = rgb_matrix_get_mode();
+    raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_zones_count(void) {
     raw_hid_buffer[0] = OPENRGB_GET_ZONES_COUNT;
