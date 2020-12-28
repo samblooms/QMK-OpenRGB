@@ -61,6 +61,7 @@ typedef struct PACKED {
 } openrgb_config_t;
 
 extern const openrgb_config_t g_openrgb_config;
+extern RGB g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL];
 
 /////////////////////////////////////////////
 // Contrtol Direct Mode
