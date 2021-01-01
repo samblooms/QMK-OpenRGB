@@ -486,53 +486,54 @@ void openrgb_get_led_matrix_rows(void) {
     raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_led_value_in_matrix(uint8_t *data) {
-    const uint8_t column = data[1];
+    const uint8_t col = data[1];
     const uint8_t row    = data[2];
 
     raw_hid_buffer[0] = OPENRGB_GET_LED_VALUE_IN_MATRIX;
-
-    uint8_t max_col;
-    uint8_t max_row;
-
+    
 #ifdef OPENRGB_USE_CUSTOM_MATRIX_MAP
-    max_col           = OPENRGB_MATRIX_COLUMNS;
-    max_row           = OPENRGB_MATRIX_ROWS;
-    raw_hid_buffer[1] = g_openrgb_config.led_matrix_map[row][column];
-#else
-    max_col           = MATRIX_COLS;
-    max_row           = MATRIX_ROWS;
-    raw_hid_buffer[1] = g_led_config.matrix_co[row][column];
-#endif
-
-    if (column >= max_col || row >= max_row) {
+    if (col >= OPENRGB_MATRIX_COLUMNS || row >= OPENRGB_MATRIX_ROWS) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
+        raw_hid_buffer[2] = OPENRGB_EOM;
+        return;
     }
+    raw_hid_buffer[1] = g_openrgb_config.led_matrix_map[row][col];
+#else
+    if (col >= MATRIX_COLS || row >= MATRIX_ROWS) {
+        raw_hid_buffer[1] = OPENRGB_FAILURE;
+        raw_hid_buffer[2] = OPENRGB_EOM;
+        return;
+    }
+    raw_hid_buffer[1] = g_led_config.matrix_co[row][col];
+#endif
 
     raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_led_name(uint8_t *data) {
-    uint8_t led_column = data[1];
-    uint8_t led_row    = data[2];
+    uint8_t col = data[1];
+    uint8_t row    = data[2];
 
     raw_hid_buffer[0] = OPENRGB_GET_LED_NAME;
+
 #ifdef OPENRGB_USE_CUSTOM_MATRIX_MAP
-    if (led_column >= OPENRGB_MATRIX_COLUMNS || led_row >= OPENRGB_MATRIX_ROWS) {
+    if (col >= OPENRGB_MATRIX_COLUMNS || row >= OPENRGB_MATRIX_ROWS) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
         raw_hid_buffer[2] = OPENRGB_EOM;
         return;
     }
 
-    uint8_t index     = g_openrgb_config.key_index_to_physical_position_map[led_row][led_column];
-    uint8_t row       = index / MATRIX_COLS;
-    uint8_t column    = index % MATRIX_COLS;
-    raw_hid_buffer[1] = keymaps[0][row][column];
+    uint8_t index         = g_openrgb_config.key_index_to_physical_position_map[row][col];
+    uint8_t matrix_co_row = index / MATRIX_COLS;
+    uint8_t matrix_co_col = index % MATRIX_COLS;
+    raw_hid_buffer[1] = keymaps[0][matrix_co_row][matrix_co_col];
 #else
-    if (led_column >= MATRIX_COLS || led_row >= MATRIX_ROWS) {
+    if (col >= MATRIX_COLS || row >= MATRIX_ROWS) {
         raw_hid_buffer[1] = OPENRGB_FAILURE;
         raw_hid_buffer[2] = OPENRGB_EOM;
         return;
     }
-    raw_hid_buffer[1] = keymaps[0][led_row][led_column];
+
+    raw_hid_buffer[1] = keymaps[0][row][col];
 #endif
 
     raw_hid_buffer[2] = OPENRGB_EOM;
