@@ -61,7 +61,6 @@ typedef struct PACKED {
     uint8_t led_matrix_map[OPENRGB_MATRIX_ROWS][OPENRGB_MATRIX_COLUMNS];
     uint8_t key_index_to_physical_position_map[OPENRGB_MATRIX_ROWS][OPENRGB_MATRIX_COLUMNS];
 #endif
-    bool should_save_to_eeprom;
 } openrgb_config_t;
 
 extern const openrgb_config_t g_openrgb_config;

@@ -83,9 +83,6 @@ const openrgb_config_t g_openrgb_config =
         { 60,  61,  62,  NO_LED,  NO_LED,  NO_LED,  66,  NO_LED,  NO_LED,  NO_LED,  70,  71,  72,  73,  74 },
     },
 #endif
-
-    // Should set to eeprom?
-    false
 };
 #endif
 
