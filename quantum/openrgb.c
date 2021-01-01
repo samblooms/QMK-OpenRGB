@@ -178,8 +178,8 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
             openrgb_qmk_mode_get_color();
             break;
 
-        case OPENRGB_GET_QMK_VERSION:
-            openrgb_get_qmk_version();
+        case OPENRGB_GET_PROTOCOL_VERSION:
+            openrgb_get_protocol_version();
             break;
         case OPENRGB_GET_DEVICE_NAME:
             openrgb_get_device_name();
@@ -373,15 +373,10 @@ void openrgb_qmk_mode_get_color(void) {
 /////////////////////////////////////////////
 // Setup OpenRGB
 /////////////////////////////////////////////
-void openrgb_get_qmk_version(void) {
-    const char *qmk_version = QMK_VERSION;
-    uint8_t     i           = 0;
-    while (qmk_version[i] != 0 && i + 2 < RAW_EPSIZE) {
-        raw_hid_buffer[i + 1] = qmk_version[i];
-        i++;
-    }
-    raw_hid_buffer[0]     = OPENRGB_GET_QMK_VERSION;
-    raw_hid_buffer[i + 1] = OPENRGB_EOM;
+void openrgb_get_protocol_version(void) {
+    raw_hid_buffer[0] = OPENRGB_GET_PROTOCOL_VERSION;
+    raw_hid_buffer[1] = OPENRGB_PROTOCOL_VERSION;
+    raw_hid_buffer[2] = OPENRGB_EOM;
 }
 void openrgb_get_device_name(void) {
     uint8_t i = 0;

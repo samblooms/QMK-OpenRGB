@@ -16,6 +16,10 @@
 
 #pragma once
 
+// This is changed only when the command IDs change,
+// so OpenRGB can detect compatible firmware.
+#define OPENRGB_PROTOCOL_VERSION 0x01
+
 enum openrgb_command_id {
     OPENRGB_EOM,
     OPENRGB_SUCCESS,
@@ -29,7 +33,7 @@ enum openrgb_command_id {
     OPENRGB_QMK_MODE_SET_COLOR_MODE_AND_SPEED,
     OPENRGB_QMK_MODE_GET_COLOR,
 
-    OPENRGB_GET_QMK_VERSION,
+    OPENRGB_GET_PROTOCOL_VERSION,
     OPENRGB_GET_DEVICE_NAME,
     OPENRGB_GET_DEVICE_VENDOR,
 
@@ -80,7 +84,7 @@ void openrgb_qmk_mode_get_color(void);
 /////////////////////////////////////////////
 // Setup OpenRGB
 /////////////////////////////////////////////
-void openrgb_get_qmk_version(void);
+void openrgb_get_protocol_version(void);
 void openrgb_get_device_name(void);
 void openrgb_get_device_vendor(void);
 
