@@ -1,5 +1,6 @@
+#ifndef DISABLE_RGB_MATRIX_SOLID_COLOR
 RGB_MATRIX_EFFECT(SOLID_COLOR)
-#ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#   ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
 bool SOLID_COLOR(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
@@ -12,4 +13,6 @@ bool SOLID_COLOR(effect_params_t* params) {
     return led_max < DRIVER_LED_TOTAL;
 }
 
-#endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#    endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#endif      // DISABLE_RGB_MATRIX_RAINDROPS
+

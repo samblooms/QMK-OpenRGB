@@ -205,6 +205,7 @@ typedef struct {
 extern const rgb_matrix_driver_t rgb_matrix_driver;
 
 extern rgb_config_t rgb_matrix_config;
+extern RGB          g_rgb_matrix_hid_direct_mode_colors[DRIVER_LED_TOTAL];
 
 extern bool         g_suspend_state;
 extern uint32_t     g_rgb_timer;
