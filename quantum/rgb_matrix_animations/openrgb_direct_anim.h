@@ -17,9 +17,9 @@ bool OPENRGB_DIRECT(effect_params_t* params) {
         #else
         rgb_matrix_set_color(
             i,
-            g_openrgb_direct_mode_colors[i].r,
-            g_openrgb_direct_mode_colors[i].g,
-            g_openrgb_direct_mode_colors[i].b
+            255,
+            255,
+            255
         );
         #endif
     }
