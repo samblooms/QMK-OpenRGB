@@ -10,16 +10,16 @@ bool OPENRGB_DIRECT(effect_params_t* params) {
         float brightness = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
         rgb_matrix_set_color(
             i,
-            brightness * g_openrgb_direct_mode_colors[i].r,
-            brightness * g_openrgb_direct_mode_colors[i].g,
-            brightness * g_openrgb_direct_mode_colors[i].b
+            5,
+            5,
+            5
         );
         #else
         rgb_matrix_set_color(
             i,
-            255,
-            255,
-            255
+            5
+            5,
+            5
         );
         #endif
     }
